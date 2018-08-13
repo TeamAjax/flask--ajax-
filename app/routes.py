@@ -13,7 +13,6 @@ from forms import LoginForm
 @app.route('/index')
 @login_required
 def index():
-
     return render_template('index.html', title='Home Page')
 
 
@@ -55,3 +54,4 @@ def register():
 
 @app.route('/users/', methods=['GET'])
 def user_search():
+    pass
