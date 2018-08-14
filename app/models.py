@@ -7,7 +7,7 @@ from app import db, login, app
 
 
 class User(UserMixin, db.Model):
-    user_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
+    user_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False, autoincrement=True)
     username = db.Column(db.String(64), index=True, unique=True, nullable=False)
     firstname = db.Column(db.String(64), nullable=False)
     lastname = db.Column(db.String(64), nullable=False)
@@ -30,7 +30,7 @@ class User(UserMixin, db.Model):
             'password_hash': self.password_hash
         }
 
-        response = '<Genre %s>' % data
+        response = '<User %s>' % data
         return repr(response)
 
     def set_password(self, password):
@@ -61,7 +61,7 @@ class User(UserMixin, db.Model):
 
 
 class Genre(db.Model):
-    genre_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
+    genre_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False, autoincrement=True)
     genre = db.Column(db.String(64), unique=True, nullable=False)
     type = db.Column(db.String(64), nullable=False)
 
@@ -77,10 +77,10 @@ class Genre(db.Model):
 
 
 class Book(db.Model):
-    book_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
+    book_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False, autoincrement=True)
     bookname = db.Column(db.String(64), nullable=False)
     image = db.Column(db.String(120), nullable=False)
-    description = db.Column(db.String(64), nullable=False)
+    description = db.Column(db.String(120), nullable=False)
 
     def __repr__(self):
         data = {
@@ -110,6 +110,13 @@ class Library(db.Model):
 
         response = '<Library %s>' %data
         return repr(response)
+
+class BookCategory(db.Model):
+    genre_id = db.Column(db.Integer, db.ForeignKey('genre.genre_id'), primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.book_id'), primary_key=True)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 
 # class RateComment(db.Model):
