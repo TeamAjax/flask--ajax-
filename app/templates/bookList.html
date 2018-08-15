@@ -52,25 +52,20 @@
             <li><a href="#booksDropDown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Books </a>
               <ul id="booksDropDown" class="collapse list-unstyled ">
                 <li><a href="bookList.html">List</a></li>
-                <li><a href="#">Add books</a></li>
-                <li><a href="booksbyid.html">Display Books by ID</a></li>
-                <li><a href="#">Delete Books by ID</a></li>
+                
                 
               </ul>
             </li>  
               
              <li><a href="#catDropDown" aria-expanded="false" data-toggle="collapse"> <i class="fa fa-list"></i>Category
                  /Genre </a>
-              <ul id="catDropDown" class="collapse list-unstyled ">
-                <li><a href="#">Add Category</a></li>
+              <ul id="catDropDown">
+                <li><a href="#addCategory" data-toggle="modal">Add Category</a></li>
                 
               </ul>
             </li>              
-              <li><a href="#usersDropDown" aria-expanded="false" > <i class="fa fa-user"></i>Users</a>
-              <ul id="usersDropDown" class="collapse list-unstyled ">
-                
-                
-              </ul>
+              <li><a href="listusers.html" aria-expanded="false" > <i class="fa fa-user"></i>Users</a>
+              
             </li>  
               
               
@@ -103,55 +98,66 @@
         <div class="col-lg-12">
               <div class="card">
                 <div class="card-header">
-                  <h4>Compact Table</h4>
+                 
+                  <h4>List of Books</h4>
+                <div class="float-right"><button class="btn btn-success"href="#addBooks" data-toggle="modal">Add books</button></div>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table table-striped table-sm">
                       <thead>
                         <tr>
-                          <th>#</th>
-                          <th>First Name</th>
-                          <th>Last Name</th>
-                          <th>Username</th>
+                         
+                          <th>BID </th>
+                          <th>GID</th>
+                          <th>Title</th>
+                          <th>Author</th>
+                          <th>Description</th>
+                          
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
                           <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
                           <th scope="row">3</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter      </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
                           <th scope="row">4</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
                           <th scope="row">5</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
                         </tr>
                         <tr>
                           <th scope="row">6</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter       </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                           <td></td>
                         </tr>
                       </tbody>
                     </table>
@@ -172,6 +178,69 @@
         </div>
       </footer>
     </div>
+    <!-- Modal For add category-->
+                  <div id="addCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+                    <div role="document" class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 id="catmodal" class="modal-title">Add Books</h5>
+                          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <form>
+                            <div class="form-group">
+                              <label>Genre</label>
+                              <input type="text" placeholder="Genre" class="form-control">
+                            </div>
+                            <div class="form-group">       
+                              <label>Type</label>
+                              <input type="text" placeholder="Type" class="form-control">
+                            </div>
+                            
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                          <button type="button" class="btn btn-primary">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    <!-- Modal For add books-->
+                  <div id="addBooks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+                    <div role="document" class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 id="exampleModalLabel" class="modal-title">Add Books</h5>
+                          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="modal-body">
+                          
+                          <form>
+                            <div class="form-group">
+                              <label>Title</label>
+                              <input type="text" placeholder="Title" class="form-control">
+                            </div>
+                            <div class="form-group">       
+                              <label>Author</label>
+                              <input type="text" placeholder="Author" class="form-control">
+                            </div>
+                            <div class="form-group">       
+                              <label>Description</label>
+                              <input type="text" placeholder="Description" class="form-control">
+                            </div>
+                            
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
+                          <button type="button" class="btn btn-primary">Add</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+    
     <!-- JavaScript files-->
     <script src="../static/vendor/jquery/jquery.min.js"></script>
     <script src="../static/vendor/popper.js/umd/popper.min.js"> </script>
@@ -184,5 +253,7 @@
     <script src="../static/js/charts-home.js"></script>
     <!-- Main File-->
     <script src="../static/js/front.js"></script>
+    <!-- Main File-->
+    <script src="js/front.js"></script>
   </body>
 </html>
