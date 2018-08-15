@@ -3,8 +3,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 import json
 from werkzeug.security import generate_password_hash
 from app import app, db
-from app.models import User
-from forms import LoginForm
+from app.models import *
+from forms import LoginForm, BookForm, UserSearch
 from flask_httpauth import HTTPBasicAuth
 
 auth = HTTPBasicAuth()
@@ -78,9 +78,71 @@ def register():
     user = User(username=username, firstname=firstname, lastname=lastname, email=email, phone=phone, balance=0, role='reader', password_hash=password)
     #db.session.add(user)
     #db.session.commit()
-    return jsonify(user.__repr__())
+    return jsonify(user.user_obj())
 
 
 @app.route('/users/', methods=['GET'])
 def user_search():
     pass
+
+
+@app.route('/book', methods=['GET'])
+def getAllBook():
+    book_list = Book.query.all()
+    items = []
+    for book in book_list:
+        items.append({'book_name': book.bookname, 'img': book.image, 'desc' : book.description })
+    return jsonify(items)
+
+
+@app.route('/addBook', methods=['GET'])
+def addBookForm():
+    form = BookForm()
+    return render_template('addForm.html', form=form)
+
+@app.route('/book', methods=['POST'])
+def addBook():
+    form = BookForm(request.form)
+    bookname = form.bookname.data
+    image = form.image.data
+    description = form.description.data
+
+    book = Book(bookname=bookname, image=image, description=description)
+    db.session.add(book)
+    db.session.commit()
+    return jsonify([{'book_name':bookname, 'image':image, 'description':description}])
+
+@app.route('/genre', methods=['GET'])
+def getAllGenre():
+    genre_list = Genre.query.all()
+    items = []
+    for genre in genre_list:
+        items.append({'genre': genre.genre, 'type': genre.type})
+    return jsonify(items)
+
+# @app.route('/try', methods=['GET', 'POST'])
+# def searchUser():
+#     search = UserSearch(request.form)
+#     if request.method == 'POST':
+#         return search_results(search)
+#
+#     return render_template('search.html', form=search)
+#
+#
+# @app.route('/results')
+# def search_results(search):
+#     results = []
+#     search_string = search.data['search']
+#
+#     if search.data['search'] == '':
+#         qry = User.query()
+#         results = qry.all()
+#
+#     if not results:
+#         flash('No results found!')
+#         return redirect('/')
+#     else:
+#         # display results
+#         table = ""
+#         return render_template('results.html', table=table)
+#

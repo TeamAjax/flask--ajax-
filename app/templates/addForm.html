@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+
+<body>
+<form class="" id="bookForm" action="/book" method="POST">
+    <h1 class="signUpTitle">Add Book</h1>
+    {{ form.csrf_token }}
+    {{ form.booknme(placeholder='Enter Book Name') }}<br>
+    {{ form.image(placeholder='image') }}<br>
+    {{ form.description(placeholder='Enter description') }}<br>
+    {{ form.submit(type="submit", value="Add Book") }}
+</form>
+</body>
+</html>
