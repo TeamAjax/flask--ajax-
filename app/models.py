@@ -12,26 +12,27 @@ class User(UserMixin, db.Model):
     firstname = db.Column(db.String(64), nullable=False)
     lastname = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(120), index=True, unique=True, nullable=False)
-    # balance = db.Column(db.Float)
+    balance = db.Column(db.Float)
     phone = db.Column(db.Integer, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     role = db.Column(db.String(24), nullable=False)
     # posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def __repr__(self):
-        data = {
+        user_data = {
             'user_id': self.user_id,
             'username': self.username,
             'firstname': self.firstname,
             'lastname': self.lastname,
             'email': self.email,
-            # 'balance': self.balance,
+            'balance': self.balance,
             'phone': self.phone,
             'password_hash': self.password_hash
         }
 
-        response = '<User %s>' % data
-        return repr(response)
+        # response = '<User %s>' % data
+        # return repr(response)
+        return user_data
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -66,15 +67,15 @@ class Genre(db.Model):
     type = db.Column(db.String(64), nullable=False)
 
     def __repr__(self):
-        data = {
+        genre_data = {
             'genre_id': self.genre_id,
             'genre': self.genre,
             'type': self.type
         }
 
-        response = '<Genre %s>' %data
-        return repr(response)
-
+        # response = '<Genre %s>' %data
+        # return repr(response)
+        return genre_data
 
 class Book(db.Model):
     book_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False, autoincrement=True)
@@ -83,15 +84,16 @@ class Book(db.Model):
     description = db.Column(db.String(120), nullable=False)
 
     def __repr__(self):
-        data = {
+        book_data = {
             'book_id': self.book_id,
             'book_name': self.bookname,
             'image': self.image,
             'description': self.description
         }
 
-        response = '<Book %s>' %data
-        return repr(response)
+        # response = '<Book %s>' %data
+        # return repr(response)
+        return book_data
 
 
 class Library(db.Model):
@@ -101,23 +103,28 @@ class Library(db.Model):
     book_name = db.Column(db.Integer, db.ForeignKey('book.bookname'), nullable=False)
 
     def __repr__(self):
-        data = {
+        library_data = {
             'lib_id': self.lib_id,
             'genre_id': self.gen_id,
             'book_id': self.bo_id,
             'book_name': self.bo_name
         }
 
-        response = '<Library %s>' %data
-        return repr(response)
+        # response = '<Library %s>' %data
+        # return repr(response)
+        return library_data
 
 class BookCategory(db.Model):
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.genre_id'), primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('book.book_id'), primary_key=True)
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        bookCategory_data = {
+            'genre_id': self.genre_id,
+            'book_id': self.book_id,
+        }
 
+        return bookCategory_data
 
 # class RateComment(db.Model):
 #     rate_comment_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
