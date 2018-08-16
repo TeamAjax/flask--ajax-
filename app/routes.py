@@ -4,7 +4,7 @@ import json
 from werkzeug.security import generate_password_hash
 from app import app, db
 from app.models import *
-from forms import LoginForm, BookForm, UserSearch
+from forms import LoginForm, BookForm
 from flask_httpauth import HTTPBasicAuth
 
 auth = HTTPBasicAuth()
@@ -120,29 +120,12 @@ def getAllGenre():
         items.append({'genre': genre.genre, 'type': genre.type})
     return jsonify(items)
 
-# @app.route('/try', methods=['GET', 'POST'])
-# def searchUser():
-#     search = UserSearch(request.form)
-#     if request.method == 'POST':
-#         return search_results(search)
-#
-#     return render_template('search.html', form=search)
-#
-#
-# @app.route('/results')
-# def search_results(search):
-#     results = []
-#     search_string = search.data['search']
-#
-#     if search.data['search'] == '':
-#         qry = User.query()
-#         results = qry.all()
-#
-#     if not results:
-#         flash('No results found!')
-#         return redirect('/')
-#     else:
-#         # display results
-#         table = ""
-#         return render_template('results.html', table=table)
-#
+@app.route('/genre1/<category>', methods=['GET', 'POST'])
+def searchBookCategory(category):
+    book_id = request.form.get('id')
+    books = Book.query.get(book_id)
+    genre = Genre.query.get(category)
+    books.genre.append(genre)
+
+    db.session.add(books)
+    db.session.commit()
