@@ -82,13 +82,16 @@ class Book(db.Model):
     bookname = db.Column(db.String(64), nullable=False)
     image = db.Column(db.String(120), nullable=False)
     description = db.Column(db.String(120), nullable=False)
+    genre = db.relationship('Genre', secondary='library', lazy='subquery',
+        backref=db.backref('books', lazy=True))
 
     def book_obj(self):
         book_data = {
             'book_id': self.id,
             'book_name': self.bookname,
             'image': self.image,
-            'description': self.description
+            'description': self.description,
+            'genre_id': self.genre_id
         }
 
         # response = '<Book %s>' %data
@@ -97,17 +100,15 @@ class Book(db.Model):
 
 
 class Library(db.Model):
-    id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
     gen_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
-    book_name = db.Column(db.Integer, db.ForeignKey('book.bookname'), nullable=False)
 
     def library_obj(self):
         library_data = {
             'lib_id': self.id,
             'genre_id': self.gen_id,
-            'book_id': self.bo_id,
-            'book_name': self.bo_name
+            'book_id': self.bo_id
         }
 
         # response = '<Library %s>' %data
@@ -115,9 +116,9 @@ class Library(db.Model):
         return library_data
 
 class BookCategory(db.Model):
-    id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
-    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
 
     def bookCategory_obj(self):
         bookCategory_data = {
