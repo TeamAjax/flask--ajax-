@@ -30,8 +30,18 @@ class User(UserMixin, db.Model):
             'password_hash': self.password_hash
         }
 
-        # response = '<User %s>' % data
-        # return repr(response)
+        return user_data
+
+    def user_reg(self):
+        user_data = {
+            'username': self.username,
+            'firstname': self.firstname,
+            'lastname': self.lastname,
+            'email': self.email,
+            'balance': self.balance,
+            'phone': self.phone
+        }
+
         return user_data
 
     def set_password(self, password):
@@ -77,12 +87,21 @@ class Genre(db.Model):
         # return repr(response)
         return genre_data
 
+    def genre_reg(self):
+        genre_data = {
+            'genre': self.genre,
+            'type': self.type
+        }
+
+        return genre_data
+
+
 class Book(db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True, autoincrement=True)
     bookname = db.Column(db.String(64), nullable=False)
     image = db.Column(db.String(120), nullable=False)
     description = db.Column(db.String(120), nullable=False)
-    genre = db.relationship('Genre', secondary='library', lazy='subquery',
+    genre = db.relationship('Genre', secondary='book_genre', lazy='subquery',
         backref=db.backref('books', lazy=True))
 
     def book_obj(self):
@@ -91,7 +110,17 @@ class Book(db.Model):
             'book_name': self.bookname,
             'image': self.image,
             'description': self.description,
-            'genre_id': self.genre_id
+        }
+
+        # response = '<Book %s>' %data
+        # return repr(response)
+        return book_data
+
+    def book_reg(self):
+        book_data = {
+            'book_name': self.bookname,
+            'image': self.image,
+            'description': self.description,
         }
 
         # response = '<Book %s>' %data
@@ -99,39 +128,48 @@ class Book(db.Model):
         return book_data
 
 
+class BookGenre(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
+
+    def bookGenre_obj(self):
+        bookGenre_data = {
+            'bookCategory_id' : self.id,
+            'genre_id': self.genre_id,
+            'book_id': self.book_id,
+        }
+
+        return bookGenre_data
+
+    def bookGenre_reg(self):
+        bookGenre_data = {
+            'genre_id': self.genre_id,
+            'book_id': self.book_id,
+        }
+
+        return bookGenre_data
+
 class Library(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    gen_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
 
     def library_obj(self):
         library_data = {
             'lib_id': self.id,
-            'genre_id': self.gen_id,
-            'book_id': self.bo_id
+            'user_id': self.user_id,
+            'book_id': self.book_id
         }
 
         # response = '<Library %s>' %data
         # return repr(response)
         return library_data
 
-class BookCategory(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
-    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
-
-    def bookCategory_obj(self):
-        bookCategory_data = {
-            'bookCategory_id' : self.id,
-            'genre_id': self.genre_id,
-            'book_id': self.book_id,
-        }
-
-        return bookCategory_data
 
 # class RateComment(db.Model):
 #     rate_comment_id = db.Column(db.Integer, unique=True, primary_key=True, nullable=False)
-#     book_id = db.Column(db.Integer, db.ForeignKey('book.book_id'))
+#     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
 #     rate = db.Column(db.Integer, nullable=False)
 #     comment = db.Column(db.Text, nullable=False)
 #
