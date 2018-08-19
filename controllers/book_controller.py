@@ -24,11 +24,11 @@ def book():
         response.status_code = 200
         return response
 
-
-@app.route('/addBook', methods=['GET'])
-def addBookForm():
-    form = BookForm()
-    return render_template('addForm.html', form=form)
+#
+# @app.route('/addBook', methods=['GET'])
+# def addBookForm():
+#     form = BookForm()
+#     return render_template('addForm.html', form=form)
 
 
 @app.route('/book/<book_id>', methods=['GET', 'DELETE'])

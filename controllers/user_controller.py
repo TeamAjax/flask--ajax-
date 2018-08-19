@@ -101,3 +101,11 @@ def user_search(username):
         "phone": user.phone
     }
     return jsonify(user_data), 200
+
+@app.route('/users/<username>', methods=['DELETE'])
+def user_delete(username):
+    print id
+    user = User.query.filter_by(username=username).first()
+    db.session.delete(user)
+    db.session.commit()
+    return "Success!! The user has been deleted"
